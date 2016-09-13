@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 
 //class App extends React.Component {
 //  render() {
@@ -19,14 +20,26 @@ import React from 'react';
 
 // jsx: wrapped dom elements in parentheses (more than one node)
 class App extends React.Component {
+  
+
   render() {
-    return (
-      <div>
-        <h1>Hello World</h1>
-        <b>Bold</b>
-      </div>
-    );
+    let val = this.props.txt;
+    return <h1>{val}</h1>;
   }
 }
+
+App.propTypes = {
+  txt: React.PropTypes.string,
+  cat: React.PropTypes.number.isRequired
+}
+
+App.defaultProps = {
+  txt: 'Que manera de caer agua'
+}
+
+ReactDOM.render(
+  <App cat={53}  />,
+  document.getElementById('app')
+)
 
 export default App;
