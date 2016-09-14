@@ -27,6 +27,7 @@ class App extends React.Component {
   }
 }
 
+// Stateless component
 const Widget = (props) => {
   return (
     <div>
