@@ -4,59 +4,45 @@ import ReactDOM from 'react-dom';
 class App extends React.Component {
   constructor() {
     super();
-    this.state = {
-      val: 0
-    }
     this.update = this.update.bind(this);
+    this.state = {increasing: false};
   }
 
   update(e) {
-    this.setState({val: this.state.val + 1})
-  }
-
-  componentWillMount() {
-    console.log('mounting');
-    this.setState({m: 2});
-  }
-
-  render() {
-    console.log('rendering')
-    return <button onClick={this.update}>{this.state.val * this.state.m}</button>
-  }
-
-  componentDidMount() {
-    this.inc = setInterval( this.update, 500);
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.inc);
-  }
-
-}
-
-class Wrapper extends React.Component {
-
-  constructor(){
-    super();
-  }
-
-  mount() {
-    ReactDOM.render(<App />, document.getElementById('aContainer'))
-  }
-
-  unmount() {
-    ReactDOM.unmountComponentAtNode(document.getElementById('aContainer'))
-  }
-
-  render() {
-    return (
-      <div>
-        <button onClick={this.mount.bind(this)}>Mount</button>
-        <button onClick={this.unmount.bind(this)}>Unmount</button>
-        <div id="aContainer"></div>
-      </div>
+    ReactDOM.render(
+      <App val={this.props.val+1} />,
+      document.getElementById('app')
     )
   }
+
+  componentWillReceiveProps(nextProps) {
+    console.log('willReceive');
+    this.setState({
+      increasing: nextProps.val > this.props.val
+    })
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    console.log('shouldUpdate ');
+    console.log(nextState)
+
+    return nextProps.val % 5 === 0;
+  }
+  
+  componentDidUpdate(prevProps) {
+    console.log('prevProps', prevProps)
+  }
+
+  render() {
+    console.log(this.state.increasing)
+    return (
+      <button onClick={this.update}>{this.props.val}</button>
+    )
+  }
+
+
 }
 
-export default Wrapper;
+App.defaultProps = { val: 0}
+
+export default App;
