@@ -20,9 +20,10 @@ class App extends React.Component {
         <NumInput ref="red"
           min={0}
           max={255}
-          step={1}
+          step={0.01}
           val={+this.state.red}
           label="Red"
+          type="number"
           update={this.update} />
         <br/>
       </div>
